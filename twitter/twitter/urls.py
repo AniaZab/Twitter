@@ -34,6 +34,7 @@ schema_view = get_schema_view(
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'posts', views.PostViewSet)
+router.register(r'profiles', views.ProfileViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
