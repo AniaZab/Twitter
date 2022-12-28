@@ -4,10 +4,12 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
 
-from project.serializers import UserSerializer, PostSerializer, ProfileSerializer
+from project.serializers import UserSerializer, PostSerializer
 #from project.serializers import PostSerializer
 
-from project.models import Post, Profile, User
+from project.models import Post, User
+from rest_framework.response import Response
+from rest_framework import status
 
 
 
@@ -20,6 +22,3 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-class ProfileViewSet(viewsets.ModelViewSet):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer

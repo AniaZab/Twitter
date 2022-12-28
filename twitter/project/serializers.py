@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from project.models import Post, Profile
+from project.models import Post
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -13,10 +13,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class PostSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Post
-        fields = ['content']
-
-
-class ProfileSerializer(serializers.HyperlinkedModelSerializer): #ModelSerializer
-    class Meta:
-        model = Profile
-        fields = '__all__'
+        #user
+        #likedBy
+        fields = '__all__' #['title', 'content']
