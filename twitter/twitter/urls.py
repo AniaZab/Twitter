@@ -33,8 +33,8 @@ schema_view = get_schema_view(
 )
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'posts', views.PostViewSet)
+router.register(r'users', views.UserViewSet, basename='users')
+router.register(r'posts', views.PostViewSet, basename='posts')
 
 urlpatterns = [
     path('', include(router.urls)),

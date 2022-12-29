@@ -10,6 +10,16 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'username', 'email']
 
 
+class CreatePostSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['title', 'content']
+
+class EmptySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Post
+        fields = []
+
 class PostSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Post
