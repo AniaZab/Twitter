@@ -27,6 +27,26 @@ class PostViewSet(viewsets.GenericViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
+    @action(detail=False, methods=['GET'], url_path='get-post-list', permission_classes=[IsAuthenticated, ])
+    def get_post_list(self, request):
+        return Response(serializers.serialize('json', self.queryset))
+    @action(detail=False, methods=['GET'], url_path='get-post-list-created-by-logged-user', permission_classes=[IsAuthenticated, ])
+    def get_post_list_created_by_logged_user(self, request):
+        return Response(serializers.serialize('json', self.model.objects.filter(user=request.user)))
+    @action(detail=False, methods=['GET'], url_path='get-post-list-liked-by-logged-user', permission_classes=[IsAuthenticated, ])
+    def get_post_list_liked_by_logged_user(self, request):
+        return Response(serializers.serialize('json', self.model.objects.filter(likedBy=request.user)))
+
+    @action(detail=True, methods=['GET'], url_path='get-post-list-created-by',
+            permission_classes=[IsAuthenticated, ])
+    def get_post_list_created_by_user(self, request, pk=None):
+        return Response(serializers.serialize('json', self.model.objects.filter(user=pk)))
+
+    @action(detail=True, methods=['GET'], url_path='get-post-list-liked-by',
+            permission_classes=[IsAuthenticated, ])
+    def get_post_list_liked_by_user(self, request, pk=None):
+        return Response(serializers.serialize('json', self.model.objects.filter(likedBy=pk)))
+
     @swagger_auto_schema(request_body=CreatePostSerializer)
     @action(detail=False, methods=['POST'], url_path='add-post', permission_classes=[IsAuthenticated, ])
     def create_new_post(self, request):

@@ -23,6 +23,4 @@ class EmptySerializer(serializers.HyperlinkedModelSerializer):
 class PostSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Post
-        #user
-        #likedBy
-        fields = '__all__' #['title', 'content']
+        fields = '__all__'
