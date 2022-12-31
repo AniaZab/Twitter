@@ -48,6 +48,16 @@ class PostViewSet(viewsets.GenericViewSet):
         return Response(serializers.serialize('json', self.model.objects.filter(likedBy=pk)))
 
     @swagger_auto_schema(request_body=CreatePostSerializer)
+    @action(detail=True, methods=['PUT'], url_path='change-post', permission_classes=[IsAuthenticated, ])
+    def change_post(self, request, pk=None):
+        post = get_object_or_404(self.model, pk=pk)
+        post_req = request.data
+        post.title = post_req["title"]
+        post.content = post_req["content"]
+        post.save()
+        return Response("Post changed!")
+
+    @swagger_auto_schema(request_body=CreatePostSerializer)
     @action(detail=False, methods=['POST'], url_path='add-post', permission_classes=[IsAuthenticated, ])
     def create_new_post(self, request):
         post_data = request.data
