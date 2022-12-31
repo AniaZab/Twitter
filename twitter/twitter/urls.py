@@ -33,7 +33,7 @@ schema_view = get_schema_view(
 )
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet, basename='users')
+router.register(r'users', views.UserViewSet, basename='users') # basename='users' - psuje sciezke http://127.0.0.1:8000/users/, jest blad: Could not resolve URL for hyperlinked relationship using view name "user-detail"
 router.register(r'posts', views.PostViewSet, basename='posts')
 
 urlpatterns = [
