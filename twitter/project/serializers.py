@@ -1,24 +1,32 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from project.models import Post
+from project.models import Post, RegisterUser
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['url', 'username', 'email']
+        fields = '__all__'
 
 
-class CreatePostSerializer(serializers.HyperlinkedModelSerializer):
+class RegisterUserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = RegisterUser
+        fields = ['username', 'email', 'password', 'password_confirm']
+
+
+class CreateUpdatePostSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Post
         fields = ['title', 'content']
+
 
 class EmptySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Post
         fields = []
+
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
