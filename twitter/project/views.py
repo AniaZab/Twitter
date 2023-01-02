@@ -8,6 +8,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from django.core import serializers
+import re
 
 from project.serializers import UserSerializer, PostSerializer, CreateUpdatePostSerializer, EmptySerializer, RegisterUserSerializer
 
@@ -26,6 +27,7 @@ class UserViewSet(viewsets.GenericViewSet):
     @swagger_auto_schema(request_body=RegisterUserSerializer)
     @action(detail=False, methods=['POST'], url_path='register-user')
     def register_user(self, request):
+        regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
         user_req = request.data
         username = user_req["username"]
         email = user_req["email"]
@@ -33,7 +35,8 @@ class UserViewSet(viewsets.GenericViewSet):
         password_confirm = user_req["password_confirm"]
         if password != password_confirm:
             raise ValidationError("Passwords not equal")
-
+        if (not re.fullmatch(regex, email)):
+            raise ValidationError("Invalid Email")
         new_user = User.objects.create_user(username, email, password)
 
         new_user.save()
